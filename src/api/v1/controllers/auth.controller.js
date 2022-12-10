@@ -54,13 +54,13 @@ class AuthController {
         } else {
           throw {
             status: 401,
-            message: "Invalid email or password",
+            message: "Invalid username or password",
           };
         }
       } else {
         throw {
           status: 401,
-          message: "Invalid email or password",
+          message: "Invalid username or password",
         };
       }
     } catch (error) {

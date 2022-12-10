@@ -14,6 +14,37 @@ class UserController {
           "updatedAt",
         ],
         where: {
+          username: req.params.username,
+        },
+      });
+
+      if (user) {
+        res.status(200).json({
+          data: user,
+        });
+      } else {
+        throw {
+          status: 404,
+          message: "User not found",
+        };
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async profile(req, res, next) {
+    try {
+      const user = await User.findOne({
+        attributes: [
+          "publicId",
+          "name",
+          "username",
+          "isAdmin",
+          "createdAt",
+          "updatedAt",
+        ],
+        where: {
           publicId: req.user.publicId,
         },
       });
@@ -70,6 +101,43 @@ class UserController {
         throw {
           status: 404,
           message: "User list not found",
+        };
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async delete(req, res, next) {
+    try {
+      const { publicId } = req.body;
+      const user = User.findOne({
+        where: {
+          publicId,
+        },
+      });
+
+      if (user) {
+        const isDeleted = await User.destroy({
+          where: {
+            publicId,
+          },
+        });
+
+        if (isDeleted) {
+          res.status(200).json({
+            message: "Success delete user",
+          });
+        } else {
+          throw {
+            status: 409,
+            message: "Failed delete user",
+          };
+        }
+      } else {
+        throw {
+          status: 404,
+          message: "User not found",
         };
       }
     } catch (error) {
