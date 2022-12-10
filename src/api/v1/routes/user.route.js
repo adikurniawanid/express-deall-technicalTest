@@ -8,5 +8,6 @@ router.get("/profile", authorization, UserController.profile);
 router.get("/:username", authorization, UserController.get);
 router.get("/", authorization, UserController.list);
 router.delete("/", isAdmin, UserController.delete);
+router.put("/", isAdmin, UserController.update);
 
 module.exports = router;

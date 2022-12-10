@@ -16,7 +16,6 @@ module.exports = async (req, res, next) => {
         config.JWT_SECRET_KEY
       );
 
-      console.log("decoded", decoded);
       const publicId = decoded.publicId;
       const username = decoded.username;
       const isAdmin = decoded.isAdmin;

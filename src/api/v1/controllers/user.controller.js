@@ -1,6 +1,5 @@
 "use strict";
 const { User } = require("../models");
-
 class UserController {
   static async get(req, res, next) {
     try {
@@ -101,6 +100,50 @@ class UserController {
         throw {
           status: 404,
           message: "User list not found",
+        };
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async update(req, res, next) {
+    try {
+      const { publicId, name, isAdmin } = req.body;
+
+      const user = User.findOne({
+        where: {
+          publicId,
+        },
+      });
+
+      if (user) {
+        const isUpdated = User.update(
+          {
+            name,
+            isAdmin,
+          },
+          {
+            where: {
+              publicId,
+            },
+          }
+        );
+
+        if (isUpdated) {
+          res.status(200).json({
+            message: "Success update product",
+          });
+        } else {
+          throw {
+            status: 409,
+            message: "Failed update user",
+          };
+        }
+      } else {
+        throw {
+          status: 404,
+          message: "User not found",
         };
       }
     } catch (error) {
