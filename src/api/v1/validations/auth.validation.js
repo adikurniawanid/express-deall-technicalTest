@@ -33,6 +33,19 @@ const registerValidationRules = () => {
   ];
 };
 
+const loginValidationRules = () => {
+  return [
+    body("username").notEmpty().bail().withMessage("Username is required"),
+    body("password")
+      .notEmpty()
+      .bail()
+      .withMessage("Password is required")
+      .isLength({ min: 8, max: 21 })
+      .withMessage("Password must between 8 - 21 characters"),
+  ];
+};
+
 module.exports = {
   registerValidationRules,
+  loginValidationRules,
 };

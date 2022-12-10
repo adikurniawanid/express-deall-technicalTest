@@ -3,7 +3,10 @@ const express = require("express");
 const router = express.Router();
 const { AuthController } = require("../controllers");
 const { validation } = require("../middlewares");
-const { registerValidationRules } = require("../validations/auth.validation");
+const {
+  registerValidationRules,
+  loginValidationRules,
+} = require("../validations/auth.validation");
 
 router.post(
   "/register",
@@ -11,5 +14,7 @@ router.post(
   validation,
   AuthController.register
 );
+
+router.post("/login", loginValidationRules(), validation, AuthController.login);
 
 module.exports = router;
