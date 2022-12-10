@@ -44,7 +44,11 @@ class AuthController {
         if (isPasswordValid) {
           res.status(200).json({
             data: {
-              token: await generateJWT(user.publicId, user.username),
+              token: await generateJWT(
+                user.publicId,
+                user.username,
+                user.isAdmin
+              ),
             },
           });
         } else {
