@@ -111,14 +111,14 @@ class UserController {
     try {
       const { publicId, name, isAdmin } = req.body;
 
-      const user = User.findOne({
+      const user = await User.findOne({
         where: {
           publicId,
         },
       });
 
       if (user) {
-        const isUpdated = User.update(
+        const isUpdated = await User.update(
           {
             name,
             isAdmin,
@@ -132,7 +132,7 @@ class UserController {
 
         if (isUpdated) {
           res.status(200).json({
-            message: "Success update product",
+            message: "Success update user",
           });
         } else {
           throw {
@@ -154,7 +154,7 @@ class UserController {
   static async delete(req, res, next) {
     try {
       const { publicId } = req.body;
-      const user = User.findOne({
+      const user = await User.findOne({
         where: {
           publicId,
         },
